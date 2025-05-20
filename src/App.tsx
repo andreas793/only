@@ -20,6 +20,7 @@ const Wrapper = styled.div`
     position: relative;
     font-family: "PT Sans", Arial, sans-serif;
     padding: 170px 80px 0 80px;
+    box-sizing: border-box;
     &:after {
         display: block;
         content: '';
