@@ -3,6 +3,7 @@ import styled from "styled-components";
 import {Event} from "./Event";
 import {Pagination} from "./Pagination";
 import CountUp from "react-countup";
+import {CountUpText, EventsWrapper, Title, TitleWrapper} from "./events.styled";
 
 const initialState = {
     activeId: 1,
@@ -118,40 +119,5 @@ export const Events = () => {
     </>)
 }
 
-const TitleWrapper = styled.div`
-    font-size: 56px;
-    font-weight: bold;
-    margin-bottom: 80px;`;
 
-
-const Title = styled.div`
-    position: relative;
-    width: 100%;
-    margin-bottom: 137px;
-    font-size: 200px;
-    line-height: 160px;
-    display: flex;
-    justify-content: center;
-    z-index: -1;
-    gap: 100px;
-`;
-
-const CountUpText = styled.div`
-    color: #3877EE;
-    font-weight: bold;
-    &:last-child {
-        color: deeppink;
-    }`;
-
-const EventsWrapper = styled.div<{rotate: number}>`
-    width: 530px;
-    height: 530px;
-    position: absolute;
-    left: calc(50% - 265px);
-    top: calc(50% - 265px);
-    border-radius: 50%;
-    border: 1px solid rgba(66, 86, 122, .1);
-    transform: rotate(${({rotate}) => rotate+'deg'});
-    transition: transform .5s;
-`;
 
