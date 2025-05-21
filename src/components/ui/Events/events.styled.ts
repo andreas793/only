@@ -3,7 +3,12 @@ import styled from "styled-components";
 export const TitleWrapper = styled.div`
     font-size: 56px;
     font-weight: bold;
-    margin-bottom: 80px;`;
+    margin-bottom: 80px;
+    @media(max-width: 1280px){
+        font-size: 20px;
+        margin-bottom: 56px;
+}
+`;
 
 
 export const Title = styled.div`
@@ -16,6 +21,11 @@ export const Title = styled.div`
     justify-content: center;
     z-index: -1;
     gap: 100px;
+    @media(max-width: 1280px){
+        font-size: 56px;
+        margin-bottom: 56px;
+        gap: 30px;
+    }
 `;
 
 export const CountUpText = styled.div`
@@ -35,6 +45,20 @@ export const EventsWrapper = styled.div<{rotate: number}>`
     border: 1px solid rgba(66, 86, 122, .1);
     transform: rotate(${({rotate}) => rotate+'deg'});
     transition: transform .5s;
+    @media(max-width: 1280px){
+        width: auto;
+        height: 6px;
+        position: relative;
+        top: 32px;
+        left: 0;
+        border: none;
+        border-radius: 0;
+        transform: none;
+        transition: none;
+        display: flex;
+        gap: 10px;
+        max-width: 118px;
+    }
 `;
 
 export const EventWrapper = styled.div<{ posx?: number, posy?: number, isActive: boolean, lengthEvents: number, idEl: number }>`
@@ -62,8 +86,18 @@ export const EventWrapper = styled.div<{ posx?: number, posy?: number, isActive:
 
     span {
         ${({isActive}) => isActive && 'opacity: 1'};
-
-    }`;
+    }
+    @media(max-width: 1280px){
+        width: 6px;
+        height: 6px;
+        background-color: ${({isActive}) => isActive ? '#42567A' : 'rgba(66, 86, 122, .1)'};
+        position: initial;
+        span {
+            display: none;
+        }
+    }
+    
+`;
 
 export const EventTitle = styled.span`
     font-size: 20px;
@@ -73,11 +107,18 @@ export const EventTitle = styled.span`
     opacity: 0;
     transition: .3s;
     transition-delay: 0.5s;
+    
 `;
 
 
 export const PaginationWrapper = styled.div`
-    margin-left: 80px;`;
+    margin-left: 80px;
+    margin-bottom: 56px;
+    @media(max-width: 1280px){
+        order: 1;
+        margin-left: 0;
+    }
+`;
 
 export const Text = styled.div`
     font-size: 14px;
@@ -90,6 +131,7 @@ export const ActionPanel = styled.div`
 
 export const Btn = styled.button<{type?: "next"}>`
     width: 50px;
+    min-width: 50px;
     height: 50px;
     border: 1px solid #42567A80;
     border-radius: 50%;

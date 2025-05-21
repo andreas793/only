@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
     height: 100vh;
+    max-height: 944px;
     width: 100%;
     border: 1px solid rgba(66, 86, 122, .1);
     position: relative;
@@ -30,5 +31,16 @@ export const Wrapper = styled.div`
         top: 0;
         left: calc(50% - 1px);
         z-index: -5;
+    }
+    @media(max-width: 1280px){
+        display: flex;
+        flex-direction: column;
+        padding: 59px 20px;
+        border: none;
+        height: initial;
+        max-height: initial;
+        &:after, &:before {
+            display: none;
+        }
     }
 `;
