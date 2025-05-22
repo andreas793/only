@@ -1,15 +1,14 @@
 import React from 'react';
 import './App.css';
-import {Events} from "./components/ui/Events/Events";
-import {Wrapper} from "./app.styled";
-import {SimpleSwiper} from "./components/Swiper/Swiper";
+import {Events} from "./components/Events/Events";
 
 
 
 function App() {
-    return (<Wrapper>
+    return (<>
             <Events />
-        </Wrapper>
+            <Events />
+        </>
     );
 }
 

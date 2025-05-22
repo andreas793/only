@@ -1,23 +1,3 @@
-import React, {useMemo, useState} from "react";
-import {Event} from "./Event";
-import {Pagination} from "./Pagination";
-import CountUp from "react-countup";
-import {CountUpText, EventsWrapper, Title, TitleWrapper} from "./events.styled";
-import {SimpleSwiper} from "../../Swiper/Swiper";
-import styled from "styled-components";
-
-const initialState = {
-    activeId: 1,
-    rotation: 0,
-    period: {
-        start: 0,
-        end: 0,
-        oldStart: 0,
-        oldEnd: 0
-    },
-    slider: {}
-}
-
 const fashion = [
     {year: "1992", text: "Кристиан Лакруа получил награду за инновационный дизайн, 'За смелое использование цвета и авангардные силуэты'"},
     {year: "1993", text: "Анна Суи признана дизайнером года, 'За демократизацию высокой моды и создание уникального американского стиля'"},
@@ -81,7 +61,7 @@ const science = [
 
 ];
 
-const eventsData = [
+export const eventsData = [
     {id: 1, title: "Мода", period: {start: 1992, end: 1997}, slider: fashion},
     {id: 2, title: "Спорт", period: {start: 1987, end: 2004}, slider: sports },
     {id: 3, title: "Литература", period: {start: 1980, end: 1990}, slider: literature},
@@ -89,116 +69,3 @@ const eventsData = [
     {id: 5, title: "Музыка", period: {start: 1985, end: 2000}, slider: music, },
     {id: 6, title: "Наука", period: {start: 1989, end: 1998}, slider: science },
 ];
-
-export const Events = () => {
-
-    const [state, setState] = useState({
-        ...initialState,
-        rotation: -60,
-        period: {
-            ...initialState.period,
-            start: eventsData[0].period.start,
-            end: eventsData[0].period.end,
-            oldStart: eventsData[0].period.start,
-            oldEnd: eventsData[0].period.end
-        },
-        slider: eventsData[0].slider,
-    })
-
-    const position = useMemo(()=>{
-        const radius = 530 / 2;
-        const center = radius;
-        return eventsData.map((_, i) => {
-            const angle = (i * 2 * Math.PI) / eventsData.length;
-            return {
-                x: center + radius * Math.cos(angle),
-                y: center + radius * Math.sin(angle)
-            };
-        });
-    },[eventsData])
-
-    const calculateAngle = ({current, target}:{ current: number, target: number}) => {
-        const lengthAvents = eventsData.length;
-        const angle = 360/lengthAvents;
-
-        if(target === lengthAvents && current === 1) return angle;
-        if (target === 1 && current === lengthAvents) return -angle;
-        if (target < current) return angle * (current - target);
-        return -angle * (target - current);
-    }
-
-    const handleActiveChange = (newId: number) => {
-        const event = eventsData.find(e => e.id === newId);
-        const delta = calculateAngle({current: state.activeId, target: newId });
-        if(event){
-            setState(prev => ({
-                ...prev,
-                activeId: newId,
-                rotation: state.rotation + delta,
-                period: {
-                    ...prev.period,
-                    oldStart: prev.period.start,
-                    oldEnd: prev.period.end,
-                    start: event.period.start,
-                    end: event.period.end
-                },
-                slider: event.slider,
-            }));
-        }
-    }
-
-
-    return (
-        <>
-        <TitleWrapper>Исторические <br/> даты</TitleWrapper>
-        <Title>
-            <CountUpText>
-                <CountUp
-                    start={state.period.oldStart}
-                    end={state.period.start}
-                    duration={2}
-                    separator={""}
-                />
-            </CountUpText>
-            <CountUpText>
-                <CountUp
-                    start={state.period.oldEnd}
-                    end={state.period.end}
-                    duration={2}
-                    separator={""}
-            /></CountUpText>
-        </Title>
-    <Wrapper>
-        <EventsWrapper rotate={state.rotation}>
-            {
-                eventsData.map((item, i) => {
-                    const {x, y} = position[i];
-                    return <Event key={item.id}
-                                  item={item}
-                                  posx={x}
-                                  posy={y}
-                                  active={state.activeId === item.id}
-                                  onActiveChange={handleActiveChange}
-                                  lengthEvents={eventsData.length}
-                    />
-                })}
-        </EventsWrapper>
-        <Pagination active={state.activeId} max={eventsData.length} onActiveChange={handleActiveChange} />
-    </Wrapper>
-        <SimpleSwiper data={state.slider} />
-        </>)
-}
-
-const Wrapper = styled.div`
-    @media(max-width: 1280px) {
-        
-        position: relative;
-        display: flex;
-        flex-direction: row-reverse;
-        justify-content: flex-end;
-        gap: 16px;
-        order: 1;
-    }`;
-
-
-
